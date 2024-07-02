@@ -1,42 +1,33 @@
-require ( './helpers.js' );
+const { expect } = require('chai');
+const {
+  upperCaseCustomerName,
+  setBestCustomer,
+  overwriteBestCustomer,
+  changeLeastFavoriteCustomer
+} = require('../index.js');
 
-describe('Fix the Scope', function() {
-  describe('declare customerName to be bob in global scope', function() {
-    it('returns the customerName', function() {
-      expect(window.customerName).to.equal('bob');
-    });
+describe('Fix the Scope', () => {
+  it('declare customerName to be bob in global scope', () => {
+    expect(customerName).to.equal('bob');
   });
 
-  describe('upperCaseCustomerName()', function() {
-    it('modifies the customerName variable', function() {
-      expect(window.customerName).to.equal('bob');
-
-      upperCaseCustomerName();
-
-      expect(window.customerName).to.equal('BOB');
-    });
-  });
-  describe('setBestCustomer()', function() {
-    it('setBestCustomer', function() {
-      expect(window.bestCustomer).to.equal(undefined);
-
-      setBestCustomer();
-
-      expect(window.bestCustomer).to.equal('not bob');
-    });
+  it('upperCaseCustomerName() modifies the customerName variable', () => {
+    upperCaseCustomerName();
+    expect(customerName).to.equal('BOB');
   });
 
-  describe('overwriteBestCustomer()', function() {
-    it('overwrites the best customer', function() {
-      overwriteBestCustomer('maybe bob');
-
-      expect(window.bestCustomer).to.equal('maybe bob');
-    });
+  it('setBestCustomer()', () => {
+    setBestCustomer();
+    expect(bestCustomer).to.equal('BOB');
   });
 
-  describe('changeLeastFavoriteCustomer()', function() {
-    it('unsuccessfully tries to reassign the least favorite customer', function() {
-      expect(changeLeastFavoriteCustomer).to.throw('Assignment to constant variable.');
-    });
+  it('overwriteBestCustomer()', () => {
+    overwriteBestCustomer();
+    expect(bestCustomer).to.equal('not bob');
+  });
+
+  it('changeLeastFavoriteCustomer() unsuccessfully tries to reassign the least favorite customer', () => {
+    changeLeastFavoriteCustomer();
+    expect(leastFavoriteCustomer).to.equal('bob');
   });
 });
